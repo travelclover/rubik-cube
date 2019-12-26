@@ -1,8 +1,11 @@
 /*
  * @Description: js
- * @Author: dengdong(dengd@esrichina.com.cn)
+ * @Author: travelclover(travelclover@163.com)
  * @Date: 2019-12-25 16:25:03
  */
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import './index.css';
 
 let container;
 let camera;
@@ -57,7 +60,7 @@ function createCube() {
         geometries.push(geometry);
         const mesh = new THREE.Mesh(geometry, materials);
         mesh.position.set(m, i, j);
-        border = new THREE.BoxHelper(mesh, 0xf3f3f3); // 设置边框
+        const border = new THREE.BoxHelper(mesh, 0xf3f3f3); // 设置边框
         scene.add(border);
         scene.add(mesh);
       }
@@ -89,7 +92,7 @@ function createCamera() {
 
 // 创建控制器
 function createControls() {
-  controls = new THREE.OrbitControls(camera, container);
+  controls = new OrbitControls(camera, container);
 }
 
 function animate() {
