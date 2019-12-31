@@ -5,6 +5,7 @@
  */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import NubikCube from './NubikCube.js';
 import './index.css';
 
 let container;
@@ -12,7 +13,6 @@ let camera;
 let renderer;
 let scene;
 let controls;
-let colors = [0x4bff4b, 0xff0000, 0xffffff, 0xff6a00, 0x2196f3, 0xffeb3b];
 
 init();
 
@@ -22,10 +22,11 @@ function init() {
   createScene();
   createCamera();
   createLight();
-  createCube();
   createRenderer();
   createControls();
   animate();
+
+  new NubikCube(scene, camera, renderer);
 }
 
 // 创建场景
@@ -38,34 +39,6 @@ function createScene() {
 function createLight() {
   const light = new THREE.AmbientLight(0xffffff, 8);
   scene.add(light);
-}
-
-// 创建立方体
-function createCube() {
-  const materials = [];
-  const geometries = [];
-
-  for (let i = 0; i < colors.length; i++) {
-    materials.push(
-      new THREE.MeshStandardMaterial({
-        color: new THREE.Color(colors[i]),
-      })
-    );
-  }
-
-  for (let i = -1; i < 2; i++) {
-    for (let j = -1; j < 2; j++) {
-      for (let m = -1; m < 2; m++) {
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        geometries.push(geometry);
-        const mesh = new THREE.Mesh(geometry, materials);
-        mesh.position.set(m, i, j);
-        const border = new THREE.BoxHelper(mesh, 0xf3f3f3); // 设置边框
-        scene.add(border);
-        scene.add(mesh);
-      }
-    }
-  }
 }
 
 // 创建渲染器
