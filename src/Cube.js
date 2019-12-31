@@ -50,6 +50,9 @@ class Cube {
       }
     });
     group.position.set(props.x, props.y, props.z);
+    group.rotation.x = 0;
+    group.rotation.y = 0;
+    group.rotation.z = 0;
     this.object = group;
   }
 }

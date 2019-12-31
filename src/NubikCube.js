@@ -4,6 +4,7 @@
  * @Date: 2019-12-31 10:20:03
  */
 import Cube from './Cube.js';
+import * as THREE from 'three';
 import config from './config.js';
 
 class NubikCube {
@@ -38,7 +39,35 @@ class NubikCube {
         }
       }
     }
-    console.log(this.cubes)
+
+    // R' 循环
+    let angle = 0;
+    setInterval(() => {
+      angle += Math.PI / 2 / (1000 / 24) * 2;
+      this.updateObjects('-R', angle);
+    }, 1000 / 24)
+  }
+
+  updateObjects(type, angle) {
+    if (type === '-R') { // R'
+      this.cubes[2][2][2].object.rotation.x = angle;
+      this.cubes[2][2][2].object.position.set(1, Math.sqrt(2) * Math.cos(Math.PI * 1 / 4 + angle), Math.sqrt(2) * Math.sin(Math.PI * 1 / 4 + angle));
+      this.cubes[2][2][1].object.rotation.x = angle;
+      this.cubes[2][2][1].object.position.set(1, Math.cos(angle), Math.sin(angle));
+      this.cubes[2][2][0].object.rotation.x = angle;
+      this.cubes[2][2][0].object.position.set(1, Math.sqrt(2) * Math.cos(angle - Math.PI * 1 / 4), Math.sqrt(2) * Math.sin(angle - Math.PI * 1 / 4));
+      this.cubes[2][1][2].object.rotation.x = angle;
+      this.cubes[2][1][2].object.position.set(1, Math.cos(Math.PI * 1 / 2 + angle), Math.sin(Math.PI * 1 / 2 + angle));
+      this.cubes[2][1][1].object.rotation.x = angle;
+      this.cubes[2][1][0].object.rotation.x = angle;
+      this.cubes[2][1][0].object.position.set(1, Math.cos(angle - Math.PI * 1 / 2), Math.sin(angle - Math.PI * 1 / 2));
+      this.cubes[2][0][2].object.rotation.x = angle;
+      this.cubes[2][0][2].object.position.set(1, Math.sqrt(2) * Math.cos(Math.PI * 3 / 4 + angle), Math.sqrt(2) * Math.sin(Math.PI * 3 / 4 + angle));
+      this.cubes[2][0][1].object.rotation.x = angle;
+      this.cubes[2][0][1].object.position.set(1, Math.cos(angle + Math.PI), Math.sin(angle + Math.PI));
+      this.cubes[2][0][0].object.rotation.x = angle;
+      this.cubes[2][0][0].object.position.set(1, Math.sqrt(2) * Math.cos(angle - Math.PI * 3 / 4), Math.sqrt(2) * Math.sin(angle - Math.PI * 3 / 4));
+    }
   }
 }
 
