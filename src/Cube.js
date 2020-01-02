@@ -8,6 +8,9 @@ import config from './config.js';
 
 class Cube {
   constructor(props) {
+    this.rotation = {};
+    this.position = {};
+
     const group = new THREE.Group();
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshStandardMaterial({
@@ -53,6 +56,12 @@ class Cube {
     group.rotation.x = 0;
     group.rotation.y = 0;
     group.rotation.z = 0;
+    this.rotation.x = 0;
+    this.rotation.y = 0;
+    this.rotation.z = 0;
+    this.position.x = props.x;
+    this.position.y = props.y;
+    this.position.z = props.z;
     this.object = group;
   }
 }

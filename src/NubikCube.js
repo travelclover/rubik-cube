@@ -40,33 +40,148 @@ class NubikCube {
       }
     }
 
+    this.animate();
+
+    this.updateObjects('U', Math.PI / 2);
+    this.transformCubes('U');
+    // this.updateObjects('R', Math.PI / 4);
+
     // R' 循环
     let angle = 0;
     setInterval(() => {
-      angle += Math.PI / 2 / (1000 / 24) * 2;
+      angle += Math.PI / 2 / (0.5 * 1000);
       this.updateObjects('-R', angle);
-    }, 1000 / 24)
+    }, 1000 / 60)
   }
 
   updateObjects(type, angle) {
-    if (type === '-R') { // R'
-      this.cubes[2][2][2].object.rotation.x = angle;
-      this.cubes[2][2][2].object.position.set(1, Math.sqrt(2) * Math.cos(Math.PI * 1 / 4 + angle), Math.sqrt(2) * Math.sin(Math.PI * 1 / 4 + angle));
-      this.cubes[2][2][1].object.rotation.x = angle;
-      this.cubes[2][2][1].object.position.set(1, Math.cos(angle), Math.sin(angle));
-      this.cubes[2][2][0].object.rotation.x = angle;
-      this.cubes[2][2][0].object.position.set(1, Math.sqrt(2) * Math.cos(angle - Math.PI * 1 / 4), Math.sqrt(2) * Math.sin(angle - Math.PI * 1 / 4));
-      this.cubes[2][1][2].object.rotation.x = angle;
-      this.cubes[2][1][2].object.position.set(1, Math.cos(Math.PI * 1 / 2 + angle), Math.sin(Math.PI * 1 / 2 + angle));
-      this.cubes[2][1][1].object.rotation.x = angle;
-      this.cubes[2][1][0].object.rotation.x = angle;
-      this.cubes[2][1][0].object.position.set(1, Math.cos(angle - Math.PI * 1 / 2), Math.sin(angle - Math.PI * 1 / 2));
-      this.cubes[2][0][2].object.rotation.x = angle;
-      this.cubes[2][0][2].object.position.set(1, Math.sqrt(2) * Math.cos(Math.PI * 3 / 4 + angle), Math.sqrt(2) * Math.sin(Math.PI * 3 / 4 + angle));
-      this.cubes[2][0][1].object.rotation.x = angle;
-      this.cubes[2][0][1].object.position.set(1, Math.cos(angle + Math.PI), Math.sin(angle + Math.PI));
-      this.cubes[2][0][0].object.rotation.x = angle;
-      this.cubes[2][0][0].object.position.set(1, Math.sqrt(2) * Math.cos(angle - Math.PI * 3 / 4), Math.sqrt(2) * Math.sin(angle - Math.PI * 3 / 4));
+    if (type.charAt(0) !== '-') { // 逆时针旋转
+      angle = -angle;
+    }
+    if (type.charAt(type.length - 1) === 'F') { // 前层
+      //
+    } else if (type.charAt(type.length - 1) === 'U') { // 上层
+      this.cubes[0][2][0].rotation.y = angle;
+      this.cubes[0][2][0].position.x = Math.sqrt(2) * Math.sin(Math.PI * 5 / 4 + angle);
+      this.cubes[0][2][0].position.z = Math.sqrt(2) * Math.cos(Math.PI * 5 / 4 + angle);
+      this.cubes[1][2][0].rotation.y = angle;
+      this.cubes[1][2][0].position.x = Math.sin(Math.PI + angle);
+      this.cubes[1][2][0].position.z = Math.cos(Math.PI + angle);
+      this.cubes[2][2][0].rotation.y = angle;
+      this.cubes[2][2][0].position.x = Math.sqrt(2) * Math.sin(Math.PI * 3 / 4 + angle);
+      this.cubes[2][2][0].position.z = Math.sqrt(2) * Math.cos(Math.PI * 3 / 4 + angle);
+      this.cubes[0][2][1].rotation.y = angle;
+      this.cubes[0][2][1].position.x = Math.sin(Math.PI * 3 / 2 + angle);
+      this.cubes[0][2][1].position.z = Math.cos(Math.PI * 3 / 2 + angle);
+      this.cubes[1][2][1].rotation.y = angle;
+      this.cubes[2][2][1].rotation.y = angle;
+      this.cubes[2][2][1].position.x = Math.sin(Math.PI * 1 / 2 + angle);
+      this.cubes[2][2][1].position.z = Math.cos(Math.PI * 1 / 2 + angle);
+      this.cubes[0][2][2].rotation.y = angle;
+      this.cubes[0][2][2].position.x = Math.sqrt(2) * Math.sin(Math.PI * 7 / 4 + angle);
+      this.cubes[0][2][2].position.z = Math.sqrt(2) * Math.cos(Math.PI * 7 / 4 + angle);
+      this.cubes[1][2][2].rotation.y = angle;
+      this.cubes[1][2][2].position.x = Math.sin(angle);
+      this.cubes[1][2][2].position.z = Math.cos(angle);
+      this.cubes[2][2][2].rotation.y = angle;
+      this.cubes[2][2][2].position.x = Math.sqrt(2) * Math.sin(Math.PI * 1 / 4 + angle);
+      this.cubes[2][2][2].position.z = Math.sqrt(2) * Math.cos(Math.PI * 1 / 4 + angle);
+    } else if (type.charAt(type.length - 1) === 'R') { // R 右层
+      this.cubes[2][2][2].rotation.x = angle;
+      this.cubes[2][2][2].position.y = Math.sqrt(2) * Math.cos(Math.PI * 1 / 4 + angle);
+      this.cubes[2][2][2].position.z = Math.sqrt(2) * Math.sin(Math.PI * 1 / 4 + angle);
+      this.cubes[2][2][1].rotation.x = angle;
+      this.cubes[2][2][1].position.y = Math.cos(angle);
+      this.cubes[2][2][1].position.z = Math.sin(angle);
+      this.cubes[2][2][0].rotation.x = angle;
+      this.cubes[2][2][0].position.y = Math.sqrt(2) * Math.cos(angle - Math.PI * 1 / 4);
+      this.cubes[2][2][0].position.z = Math.sqrt(2) * Math.sin(angle - Math.PI * 1 / 4);
+      this.cubes[2][1][2].rotation.x = angle;
+      this.cubes[2][1][2].position.y = Math.cos(Math.PI * 1 / 2 + angle);
+      this.cubes[2][1][2].position.z = Math.sin(Math.PI * 1 / 2 + angle);
+      this.cubes[2][1][1].rotation.x = angle;
+      this.cubes[2][1][0].rotation.x = angle;
+      this.cubes[2][1][0].position.y = Math.cos(angle - Math.PI * 1 / 2);
+      this.cubes[2][1][0].position.z = Math.sin(angle - Math.PI * 1 / 2);
+      this.cubes[2][0][2].rotation.x = angle;
+      this.cubes[2][0][2].position.y = Math.sqrt(2) * Math.cos(Math.PI * 3 / 4 + angle);
+      this.cubes[2][0][2].position.z = Math.sqrt(2) * Math.sin(Math.PI * 3 / 4 + angle);
+      this.cubes[2][0][1].rotation.x = angle;
+      this.cubes[2][0][1].position.y = Math.cos(angle + Math.PI);
+      this.cubes[2][0][1].position.z = Math.sin(angle + Math.PI);
+      this.cubes[2][0][0].rotation.x = angle;
+      this.cubes[2][0][0].position.y = Math.sqrt(2) * Math.cos(angle - Math.PI * 3 / 4);
+      this.cubes[2][0][0].position.z = Math.sqrt(2) * Math.sin(angle - Math.PI * 3 / 4);
+    }
+  }
+
+  /**
+   * 数组变换
+   * @param {string} type 转换类型
+   */
+  transformCubes(type) {
+    let temp = null;
+    if (type === 'U') { // 上层顺时针
+      temp = this.cubes[0][2][0];
+      this.cubes[0][2][0] = this.cubes[0][2][2];
+      this.cubes[0][2][2] = this.cubes[2][2][2];
+      this.cubes[2][2][2] = this.cubes[2][2][0];
+      this.cubes[2][2][0] = temp;
+      temp = this.cubes[1][2][0];
+      this.cubes[1][2][0] = this.cubes[0][2][1];
+      this.cubes[0][2][1] = this.cubes[1][2][2];
+      this.cubes[1][2][2] = this.cubes[2][2][1];
+      this.cubes[2][2][1] = temp;
+    } else if (type === '-U') { // 上层逆时针
+      temp = this.cubes[2][2][0];
+      this.cubes[2][2][0] = this.cubes[2][2][2];
+      this.cubes[2][2][2] = this.cubes[0][2][2];
+      this.cubes[0][2][2] = this.cubes[0][2][0];
+      this.cubes[0][2][0] = temp;
+      temp = this.cubes[2][2][1];
+      this.cubes[2][2][1] = this.cubes[1][2][2];
+      this.cubes[1][2][2] = this.cubes[0][2][1];
+      this.cubes[0][2][1] = this.cubes[1][2][0];
+      this.cubes[1][2][0] = temp;
+    } else if (type === 'R') { // 右层顺时针
+      temp = this.cubes[2][2][0];
+      this.cubes[2][2][0] = this.cubes[2][2][2];
+      this.cubes[2][2][2] = this.cubes[0][2][2];
+      this.cubes[0][2][2] = this.cubes[0][2][0];
+      this.cubes[0][2][0] = temp;
+      temp = this.cubes[2][2][1];
+      this.cubes[2][2][1] = this.cubes[1][2][2];
+      this.cubes[1][2][2] = this.cubes[0][2][1];
+      this.cubes[0][2][1] = this.cubes[1][2][0];
+      this.cubes[1][2][0] = temp;
+    } else if (type === '-R') { // 右层逆时针
+      temp = this.cubes[0][2][0];
+      this.cubes[0][2][0] = this.cubes[0][2][2];
+      this.cubes[0][2][2] = this.cubes[2][2][2];
+      this.cubes[2][2][2] = this.cubes[2][2][0];
+      this.cubes[2][2][0] = temp;
+      temp = this.cubes[1][2][0];
+      this.cubes[1][2][0] = this.cubes[0][2][1];
+      this.cubes[0][2][1] = this.cubes[1][2][2];
+      this.cubes[1][2][2] = this.cubes[2][2][1];
+      this.cubes[2][2][1] = temp;
+    }
+  }
+
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
+    for (let x = 0; x < 3; x++) {
+      for (let y = 0; y < 3; y++) {
+        for (let z = 0; z < 3; z++) {
+          const cube = this.cubes[x][y][z];
+          cube.object.rotation.x = cube.rotation.x;
+          cube.object.rotation.y = cube.rotation.y;
+          cube.object.rotation.z = cube.rotation.z;
+          cube.object.position.x = cube.position.x;
+          cube.object.position.y = cube.position.y;
+          cube.object.position.z = cube.position.z;
+        }
+      }
     }
   }
 }
